@@ -1,5 +1,5 @@
 export const personal = {
-  name: "Vansh Rustagi",
+  name: "Vansh Rastogi",
   tagline: "Tech Lead · Mobile → Full-Stack",
   bio: "4.5 years building production-grade mobile apps with Kotlin, Jetpack Compose, and KMM. Now leading full-stack SaaS development with Next.js — carrying clean architecture principles across every layer of the stack.",
   email: "vanshrustagi.2408@gmail.com",

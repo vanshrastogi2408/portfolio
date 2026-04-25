@@ -14,7 +14,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Vansh Rustagi — Tech Lead",
+  title: "Vansh Rastogi — Tech Lead",
   description:
     "Tech Lead with 4.5 years building production mobile apps with Kotlin, Jetpack Compose and KMM. Currently leading full-stack SaaS development with Next.js.",
 };

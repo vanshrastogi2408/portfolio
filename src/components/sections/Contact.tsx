@@ -82,7 +82,7 @@ export function Contact() {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="mt-16 pt-8 border-t border-white/5 text-center text-xs text-zinc-700"
       >
-        © {new Date().getFullYear()} Vansh Rustagi
+        © {new Date().getFullYear()} Vansh Rastogi
       </motion.div>
     </section>
   );
