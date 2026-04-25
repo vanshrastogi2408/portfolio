@@ -1,88 +1,50 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-
-interface Particle {
-  x: number;
-  y: number;
-  size: number;
-  speedX: number;
-  speedY: number;
-  opacity: number;
-  twinkleSpeed: number;
-  twinklePhase: number;
-}
-
 export function ParticleBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    let animId: number;
-    const particles: Particle[] = [];
-    const COUNT = 180;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = document.documentElement.scrollHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    for (let i = 0; i < COUNT; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        size: Math.random() * 1.4 + 0.3,
-        speedX: (Math.random() - 0.5) * 0.12,
-        speedY: (Math.random() - 0.5) * 0.12,
-        opacity: Math.random() * 0.35 + 0.08,
-        twinkleSpeed: Math.random() * 0.008 + 0.003,
-        twinklePhase: Math.random() * Math.PI * 2,
-      });
-    }
-
-    let frame = 0;
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      frame++;
-
-      particles.forEach((p) => {
-        const twinkle = Math.sin(p.twinklePhase + frame * p.twinkleSpeed);
-        const alpha = p.opacity + twinkle * 0.12;
-
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255,255,255,${Math.max(0, Math.min(1, alpha))})`;
-        ctx.fill();
-
-        p.x += p.speedX;
-        p.y += p.speedY;
-
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-      });
-
-      animId = requestAnimationFrame(draw);
-    };
-    draw();
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 z-0 pointer-events-none opacity-80"
-    />
+    <>
+      <div
+        className="fixed inset-0 z-0 overflow-hidden"
+        style={{ background: "hsl(201 100% 8%)" }}
+        aria-hidden="true"
+      >
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ opacity: 0.55 }}
+        >
+          <source
+            src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260314_131748_f2ca2a28-fed7-44c8-b9a9-bd9acdd5ec31.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: `
+              radial-gradient(ellipse at 50% 0%, transparent 0%, hsl(201 100% 6% / 0.35) 40%, hsl(201 100% 5% / 0.85) 100%),
+              linear-gradient(180deg, transparent 0%, transparent 40%, hsl(201 100% 6% / 0.6) 70%, hsl(201 100% 5%) 100%)
+            `,
+          }}
+        />
+      </div>
+
+      <svg
+        className="fixed inset-0 z-[1] pointer-events-none w-full h-full"
+        style={{ opacity: 0.4 }}
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <pattern id="dots" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+            <circle cx="10" cy="20" r="0.6" fill="white" opacity="0.5" />
+            <circle cx="62" cy="54" r="0.5" fill="white" opacity="0.35" />
+            <circle cx="35" cy="70" r="0.4" fill="white" opacity="0.25" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#dots)" />
+      </svg>
+    </>
   );
 }

@@ -32,7 +32,7 @@ export function Experience() {
             </div>
             {/* gradient border card */}
             <div className="relative p-[1px] rounded-xl bg-gradient-to-br from-violet-500/0 via-blue-500/0 to-cyan-500/0 group-hover:from-violet-500/30 group-hover:via-blue-500/20 group-hover:to-cyan-500/30 transition-all duration-500">
-              <div className="bg-[#0f0f1e] rounded-xl p-5">
+              <div className="rounded-xl p-5" style={{ background: "hsl(201 60% 7%)" }}>
                 <h3 className="font-[family-name:var(--font-display)] font-semibold text-zinc-100 text-lg">{job.role}</h3>
                 <p className="text-violet-400/80 text-sm mb-3">{job.company}</p>
                 <p className="text-zinc-400 leading-relaxed mb-4 text-sm">{job.description}</p>

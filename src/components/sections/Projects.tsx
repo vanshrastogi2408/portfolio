@@ -30,7 +30,7 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
       onClick={() => setExpanded((e) => !e)}
       whileHover={{ y: -4, scale: 1.005 }}
     >
-      <div className="bg-[#0f0f1e] rounded-xl p-6 h-full flex flex-col gap-3">
+      <div className="rounded-xl p-6 h-full flex flex-col gap-3" style={{ background: "hsl(201 60% 7%)" }}>
         <div className="flex items-start justify-between">
           <h3 className="font-[family-name:var(--font-display)] font-semibold text-zinc-100 group-hover:text-white transition-colors">{project.name}</h3>
           <div className="flex items-center gap-2 ml-2 shrink-0">

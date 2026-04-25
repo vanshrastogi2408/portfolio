@@ -5,8 +5,8 @@ html {
 }
 
 body {
-  background-color: #08080f;
-  color: #e8e8ff;
+  background-color: hsl(201 100% 8%);
+  color: hsl(0 0% 100%);
 }
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
