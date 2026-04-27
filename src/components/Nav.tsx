@@ -56,13 +56,15 @@ export function Nav() {
       style={scrolled || menuOpen ? { background: "hsl(201 100% 8% / 0.88)", backdropFilter: "blur(20px)" } : {}}
     >
       <nav className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
-        <motion.span
+        <motion.a
+          href="#hero"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="font-[family-name:var(--font-display)] text-base font-bold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent"
+          aria-label="Back to top"
         >
           VR
-        </motion.span>
+        </motion.a>
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-1">
