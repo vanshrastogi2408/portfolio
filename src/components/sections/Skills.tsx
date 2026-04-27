@@ -19,7 +19,7 @@ const badgeColors: Record<string, string> = {
 
 export function Skills() {
   return (
-    <section id="skills" className="py-24 border-b border-white/5">
+    <section id="skills" className="py-16 md:py-24 border-b border-white/5 scroll-mt-20">
       <motion.h2
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -37,7 +37,7 @@ export function Skills() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: gi * 0.08 }}
-            className="grid md:grid-cols-[200px_1fr] gap-4 items-start"
+            className="grid md:grid-cols-[200px_1fr] gap-3 md:gap-4 items-start"
           >
             <p className={`text-sm font-semibold pt-1 bg-gradient-to-r ${groupColors[group.category] ?? "from-zinc-400 to-zinc-300"} bg-clip-text text-transparent`}>
               {group.category}
@@ -51,6 +51,7 @@ export function Skills() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.3, delay: gi * 0.06 + si * 0.04 }}
                   whileHover={{ scale: 1.07, y: -1 }}
+                  whileTap={{ scale: 0.95 }}
                   className={`inline-block text-sm px-3 py-1 rounded-full border bg-white/[0.03] cursor-default select-none transition-all duration-200 ${badgeColors[group.category] ?? "border-zinc-700 text-zinc-300"}`}
                 >
                   {skill}

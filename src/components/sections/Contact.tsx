@@ -23,16 +23,16 @@ function LinkedinIcon(props: SVGProps<SVGSVGElement>) {
 
 type IconComponent = ComponentType<SVGProps<SVGSVGElement>> | ComponentType<{ size?: number; className?: string }>;
 
-const links: { icon: IconComponent; label: string; href: string; color: string }[] = [
+const links: { icon: IconComponent; label: string; sublabel?: string; href: string; color: string }[] = [
   { icon: Mail, label: personal.email, href: `mailto:${personal.email}`, color: "hover:text-violet-400" },
   { icon: Phone, label: personal.phone, href: `tel:${personal.phone}`, color: "hover:text-blue-400" },
-  { icon: GithubIcon, label: "github.com/vanshrastogi2408", href: personal.github, color: "hover:text-cyan-400" },
-  { icon: LinkedinIcon, label: "linkedin.com/in/vansh-rastogi-906717204", href: personal.linkedin, color: "hover:text-blue-400" },
+  { icon: GithubIcon, label: "GitHub", sublabel: "vanshrastogi2408", href: personal.github, color: "hover:text-cyan-400" },
+  { icon: LinkedinIcon, label: "LinkedIn", sublabel: "vansh-rastogi", href: personal.linkedin, color: "hover:text-blue-400" },
 ];
 
 export function Contact() {
   return (
-    <section id="contact" className="py-24">
+    <section id="contact" className="py-16 md:py-24 scroll-mt-20">
       <motion.h2
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -48,13 +48,13 @@ export function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="text-zinc-400 text-lg mb-10 max-w-lg leading-relaxed"
+        className="text-zinc-400 text-base sm:text-lg mb-10 max-w-lg leading-relaxed"
       >
         Open to interesting roles, collaborations, or just a good conversation about building software.
       </motion.p>
 
       <div className="space-y-4">
-        {links.map(({ icon: Icon, label, href, color }, i) => (
+        {links.map(({ icon: Icon, label, sublabel, href, color }, i) => (
           <motion.a
             key={href}
             href={href}
@@ -65,12 +65,20 @@ export function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: i * 0.08 }}
             whileHover={{ x: 6 }}
-            className={`flex items-center gap-3 text-zinc-500 ${color} transition-colors group w-fit`}
+            whileTap={{ scale: 0.97 }}
+            className={`flex items-center gap-3 text-zinc-500 ${color} transition-colors group w-fit max-w-full`}
           >
-            <span className="opacity-60 group-hover:opacity-100 transition-opacity">
+            <span className="opacity-60 group-hover:opacity-100 transition-opacity shrink-0">
               <Icon size={16} />
             </span>
-            <span>{label}</span>
+            <span className="min-w-0">
+              <span className="block truncate">{label}</span>
+              {sublabel && (
+                <span className="block text-xs text-zinc-600 group-hover:text-zinc-500 transition-colors truncate">
+                  {sublabel}
+                </span>
+              )}
+            </span>
           </motion.a>
         ))}
       </div>

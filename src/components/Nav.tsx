@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 const links = [
   { label: "Experience", href: "#experience" },
@@ -13,6 +14,7 @@ const links = [
 export function Nav() {
   const [active, setActive] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -36,13 +38,22 @@ export function Nav() {
     return () => observers.forEach((o) => o.disconnect());
   }, []);
 
+  // Close mobile menu when user starts scrolling
+  useEffect(() => {
+    if (!menuOpen) return;
+    const close = () => setMenuOpen(false);
+    window.addEventListener("scroll", close, { once: true, passive: true });
+    return () => window.removeEventListener("scroll", close);
+  }, [menuOpen]);
+
+  const navBg = scrolled || menuOpen
+    ? "border-b border-white/5 shadow-[0_1px_40px_rgba(0,0,0,0.6)]"
+    : "";
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#08080f]/80 backdrop-blur-xl border-b border-white/5 shadow-[0_1px_40px_rgba(0,0,0,0.6)]"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}
+      style={scrolled || menuOpen ? { background: "hsl(201 100% 8% / 0.88)", backdropFilter: "blur(20px)" } : {}}
     >
       <nav className="max-w-4xl mx-auto px-6 h-14 flex items-center justify-between">
         <motion.span
@@ -52,7 +63,9 @@ export function Nav() {
         >
           VR
         </motion.span>
-        <div className="flex items-center gap-1">
+
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-1">
           {links.map((link, i) => (
             <motion.a
               key={link.href}
@@ -74,7 +87,43 @@ export function Nav() {
             </motion.a>
           ))}
         </div>
+
+        {/* Hamburger — mobile only */}
+        <button
+          className="md:hidden flex items-center justify-center w-9 h-9 rounded-md text-zinc-400 hover:text-white transition-colors"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+        >
+          {menuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </nav>
+
+      {/* Mobile dropdown */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.22 }}
+            className="md:hidden overflow-hidden border-t border-white/5"
+          >
+            <div className="px-6 py-2 flex flex-col">
+              {links.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="py-3.5 text-base border-b border-white/5 last:border-0 transition-colors"
+                  style={{ color: active === link.href.slice(1) ? "#c4b5fd" : "#9ca3af" }}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

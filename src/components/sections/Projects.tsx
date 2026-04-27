@@ -29,8 +29,9 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
       className="group relative p-[1px] rounded-xl bg-gradient-to-br from-violet-500/10 via-blue-500/5 to-cyan-500/10 hover:from-violet-500/40 hover:via-blue-500/30 hover:to-cyan-500/40 transition-all duration-500 cursor-pointer"
       onClick={() => setExpanded((e) => !e)}
       whileHover={{ y: -4, scale: 1.005 }}
+      whileTap={{ scale: 0.98 }}
     >
-      <div className="rounded-xl p-6 h-full flex flex-col gap-3" style={{ background: "hsl(201 60% 7%)" }}>
+      <div className="rounded-xl p-5 sm:p-6 h-full flex flex-col gap-3" style={{ background: "hsl(201 60% 7%)" }}>
         <div className="flex items-start justify-between">
           <h3 className="font-[family-name:var(--font-display)] font-semibold text-zinc-100 group-hover:text-white transition-colors">{project.name}</h3>
           <div className="flex items-center gap-2 ml-2 shrink-0">
@@ -79,7 +80,7 @@ function ProjectCard({ project, index }: { project: typeof projects[number]; ind
 
 export function Projects() {
   return (
-    <section id="projects" className="py-24 border-b border-white/5">
+    <section id="projects" className="py-16 md:py-24 border-b border-white/5 scroll-mt-20">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -90,7 +91,11 @@ export function Projects() {
         <h2 className="font-[family-name:var(--font-display)] text-xs font-semibold text-zinc-500 tracking-widest uppercase">
           Projects
         </h2>
-        <p className="text-xs text-zinc-700">Click a card to expand details</p>
+        <p className="text-xs text-zinc-700">
+          <span className="hidden sm:inline">Click</span>
+          <span className="sm:hidden">Tap</span>
+          {" "}a card to expand
+        </p>
       </motion.div>
 
       <div className="grid md:grid-cols-2 gap-4">

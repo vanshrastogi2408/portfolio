@@ -74,7 +74,7 @@ export function Hero() {
         initial="hidden"
         animate="show"
         transition={{ duration: 0.7 }}
-        className="relative z-10 flex flex-col items-center max-w-4xl"
+        className="relative z-10 flex flex-col items-center max-w-4xl w-full"
       >
         <motion.p
           variants={fadeUp}
@@ -84,10 +84,12 @@ export function Hero() {
           Available for opportunities
         </motion.p>
 
+        {/* Fluid font size: scales from ~40px on 360px screens to 120px on wide screens */}
         <motion.h1
           variants={fadeUp}
           transition={{ duration: 0.7 }}
-          className="font-[family-name:var(--font-display)] text-7xl md:text-[7.5rem] font-bold leading-[0.95] tracking-tight mb-6"
+          className="font-[family-name:var(--font-display)] font-bold leading-[0.95] tracking-tight mb-6"
+          style={{ fontSize: "clamp(2.5rem, 11vw, 7.5rem)" }}
         >
           <span className="text-white">{personal.name.split(" ")[0]}</span>{" "}
           <span className="bg-gradient-to-r from-violet-400 via-blue-400 to-cyan-300 bg-clip-text text-transparent">
@@ -98,7 +100,7 @@ export function Hero() {
         <motion.div
           variants={fadeUp}
           transition={{ duration: 0.6 }}
-          className="text-2xl md:text-3xl font-light text-zinc-400 mb-6 h-10"
+          className="text-xl sm:text-2xl md:text-3xl font-light text-zinc-400 mb-6 h-9 sm:h-10"
         >
           <Typewriter />
         </motion.div>
@@ -106,41 +108,44 @@ export function Hero() {
         <motion.p
           variants={fadeUp}
           transition={{ duration: 0.6 }}
-          className="text-zinc-500 text-lg leading-relaxed max-w-2xl mb-10"
+          className="text-zinc-500 text-base sm:text-lg leading-relaxed max-w-2xl mb-10"
         >
           {personal.bio}
         </motion.p>
 
+        {/* CTA buttons: stack on mobile, row on sm+ */}
         <motion.div
           variants={fadeUp}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-4"
+          className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto"
         >
           <a
             href={`mailto:${personal.email}`}
-            className="flex items-center gap-2.5 text-sm font-semibold px-7 py-3 rounded-full bg-white text-black hover:bg-zinc-100 transition-all shadow-[0_0_40px_rgba(139,92,246,0.15)]"
+            className="flex items-center justify-center gap-2.5 text-sm font-semibold px-7 py-3.5 sm:py-3 rounded-full bg-white text-black hover:bg-zinc-100 transition-all shadow-[0_0_40px_rgba(139,92,246,0.15)]"
           >
             <Mail size={15} />
             Get in touch
           </a>
-          <a
-            href={personal.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm font-medium px-5 py-3 rounded-full border border-white/10 text-zinc-400 hover:border-violet-500/40 hover:text-violet-300 transition-all"
-          >
-            <GithubIcon />
-            GitHub
-          </a>
-          <a
-            href={personal.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm font-medium px-5 py-3 rounded-full border border-white/10 text-zinc-400 hover:border-blue-500/40 hover:text-blue-300 transition-all"
-          >
-            <LinkedinIcon />
-            LinkedIn
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href={personal.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 text-sm font-medium px-5 py-3.5 sm:py-3 rounded-full border border-white/10 text-zinc-400 hover:border-violet-500/40 hover:text-violet-300 transition-all"
+            >
+              <GithubIcon />
+              GitHub
+            </a>
+            <a
+              href={personal.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 sm:flex-none flex items-center justify-center gap-2 text-sm font-medium px-5 py-3.5 sm:py-3 rounded-full border border-white/10 text-zinc-400 hover:border-blue-500/40 hover:text-blue-300 transition-all"
+            >
+              <LinkedinIcon />
+              LinkedIn
+            </a>
+          </div>
         </motion.div>
       </motion.div>
 
