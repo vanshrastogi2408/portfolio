@@ -10,21 +10,30 @@ export function ParticleBackground() {
     if (!video) return;
 
     const tryPlay = () => {
-      video.play().catch(() => {
-        // Autoplay blocked by browser — static gradient background shows through
-      });
+      video.play().catch(() => {});
     };
 
-    // Mobile browsers pause video when tab goes background; resume on return
+    // Initial attempt
+    tryPlay();
+
+    // Resume when tab comes back from background (mobile app-switch)
     const onVisibilityChange = () => {
       if (!document.hidden) tryPlay();
     };
-
     document.addEventListener("visibilitychange", onVisibilityChange);
-    tryPlay();
+
+    // Some mobile browsers block autoplay until first user gesture
+    document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
+    document.addEventListener("click", tryPlay, { once: true });
+
+    // Also retry once the browser has buffered enough to play
+    video.addEventListener("canplay", tryPlay);
+    video.addEventListener("loadedmetadata", tryPlay);
 
     return () => {
       document.removeEventListener("visibilitychange", onVisibilityChange);
+      video.removeEventListener("canplay", tryPlay);
+      video.removeEventListener("loadedmetadata", tryPlay);
     };
   }, []);
 
@@ -41,7 +50,7 @@ export function ParticleBackground() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           style={{ opacity: 0.55 }}
         >
           <source
