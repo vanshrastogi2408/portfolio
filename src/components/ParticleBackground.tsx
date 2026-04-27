@@ -1,4 +1,33 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 export function ParticleBackground() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const tryPlay = () => {
+      video.play().catch(() => {
+        // Autoplay blocked by browser — static gradient background shows through
+      });
+    };
+
+    // Mobile browsers pause video when tab goes background; resume on return
+    const onVisibilityChange = () => {
+      if (!document.hidden) tryPlay();
+    };
+
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    tryPlay();
+
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+  }, []);
+
   return (
     <>
       <div
@@ -7,6 +36,7 @@ export function ParticleBackground() {
         aria-hidden="true"
       >
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted
